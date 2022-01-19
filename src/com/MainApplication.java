@@ -5,6 +5,7 @@ import com.inventory.Inventory;
 import com.item.Item;
 import com.vendingmachine.VendingMachineImplementation;
 import com.vendingmachine.VendingMachine;
+import java.util.Scanner;
 
 public class MainApplication {
     public static void main(String[] args){
@@ -26,17 +27,55 @@ public class MainApplication {
         //Initialize the Vending Machine
         VendingMachine machine = new VendingMachineImplementation(inventory);
 
-        machine.showAllItemDetails();
-
         //Simulating the Vending Machine Functions
-        machine.insertCash(5);
-        machine.selectItem("Pepsi");
-        machine.dispenseItemAndChange();
-        machine.insertCash(5);
-        machine.dispenseItemAndChange();
-        machine.insertCash(10);
-        machine.dispenseItemAndChange();
+        Scanner inp = new Scanner(System.in);
+        showMenu();
+        int choice = inp.nextInt();
+        while(choice!=6) {
+            switch (choice) {
+                case 1: {
+                    machine.showAllItemDetails();
+                    break;
+                }
 
-        machine.showAllItemDetails();
+                case 2: {
+                    System.out.println("Enter the item name for selection:");
+                    String itemName = inp.next();
+                    machine.selectItem(itemName);
+                    break;
+                }
+                case 3: {
+                    System.out.println("Enter the cash amount:");
+                    int cashAmount = inp.nextInt();
+                    machine.insertCash(cashAmount);
+                    break;
+                }
+                case 4: {
+                    machine.dispenseItemAndChange();
+                    break;
+                }
+
+                case 5: {
+                    machine.cancelTransaction();
+                    break;
+                }
+                case 6:
+                    break;
+            }
+
+            showMenu();
+            choice = inp.nextInt();
+        }
+
+    }
+
+    public static void showMenu(){
+        System.out.println("\nEnter any choice from below for the Vending Machine Operations");
+        System.out.println("1. Display All Items with Count");
+        System.out.println("2. Select Item");
+        System.out.println("3. Insert Cash");
+        System.out.println("4. Dispense Item and Change");
+        System.out.println("5. Cancel Transaction");
+        System.out.println("6. Exit");
     }
 }
